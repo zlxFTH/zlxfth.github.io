@@ -1,4 +1,4 @@
-npm run build
-git add .
-git commit -m "update my blog"
-git push origin master
+npm run build || exit
+git add . || exit
+git commit -m "update my blog" || exit
+git push origin master || exit
