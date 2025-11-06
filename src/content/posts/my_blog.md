@@ -1,9 +1,9 @@
 ---
 title: 博客备忘
 published: 2024-12-06
-description: '换了新的域名和新的博客，为了有纪念意义一点，本文发布日期设置于 CTT 结束的最后一天。'
+description: '换了新的域名和新的博客，为了有纪念意义一点，本文发布日期设置于 CTT 的最后一天。'
 image: ''
-tags: []
+tags: ['Notes']
 category: 'DevOps'
 draft: false 
 lang: ''
