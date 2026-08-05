@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>zlxFTH&apos;s Blog</title><description>Furry Neptura</description><link>https://zlx.moe/</link><language>zh-CN</language><item><title>Windows 11 调教记录</title><link>https://zlx.moe/posts/my_windows/</link><guid isPermaLink="true">https://zlx.moe/posts/my_windows/</guid><description>Mac 转 Win+WSL 了。</description><pubDate>Sat, 25 Jul 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;一些小的设置就不记录了，基本上就是用不顺手马上就在设置里调一下，用一段时间自然就好了。&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>zlxFTH&apos;s Blog</title><description>Furry Neptura</description><link>https://zlx.moe/</link><language>zh-CN</language><item><title>Windows+WSL 调教备忘录</title><link>https://zlx.moe/posts/my_windows/</link><guid isPermaLink="true">https://zlx.moe/posts/my_windows/</guid><description>Mac 转 Win+WSL 了。</description><pubDate>Sat, 25 Jul 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;一些小的设置就不记录了，基本上就是用不顺手马上就在设置里调一下，用一段时间自然就好了。&lt;/p&gt;
 &lt;h2&gt;QuickLook&lt;/h2&gt;
 &lt;p&gt;Link：&lt;a href=&quot;https://quicklook.cc/&quot;&gt;官网&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;把 macOS Finder 的空格预览搬过来的开源软件。&lt;/p&gt;
@@ -9,4 +9,35 @@
 &lt;p&gt;在保留动画的同时显著减少卡顿，这个对于外接 60Hz 显示器优化及其明显。&lt;/p&gt;
 &lt;h2&gt;字体&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&quot;https://font.subf.dev/zh-cn/download/&quot;&gt;https://font.subf.dev/zh-cn/download/&lt;/a&gt;，Maple Mono（编辑器）Maple Mono NF（带图标，控制器）Maple Mono NF CN（带图标，中日字符）&lt;/p&gt;
+&lt;h2&gt;WSL: Network&lt;/h2&gt;
+&lt;p&gt;进 WSL 设置把 Net 改成 Mirrored 模式。&lt;/p&gt;
+&lt;h2&gt;WSL: git&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;设置 HTTP/HTTPS 代理&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git config --global http.proxy http://127.0.0.1:7897
+git config --global https.proxy http://127.0.0.1:7897
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;取消 HTTP/HTTPS 代理&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git config --global --unset http.proxy
+git config --global --unset https.proxy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;设置 SSH 代理&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;打开 &lt;code&gt;~/.ssh/config&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;写入&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;Host github.com
+  User git
+  # 使用 connect-proxy 转发（推荐，WSL2 兼容性最好）
+  ProxyCommand nc -X 5 -x 127.0.0.1:7897 %h %p
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;设置&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;chmod 600 ~/.ssh/config
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;测试&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;ssh -T git@github.com
+&lt;/code&gt;&lt;/pre&gt;
 </content:encoded></item></channel></rss>

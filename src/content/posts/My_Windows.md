@@ -1,5 +1,5 @@
 ---
-title: Windows 11 调教记录
+title: Windows+WSL 调教备忘录
 published: 2026-07-25
 description: 'Mac 转 Win+WSL 了。'
 image: ''
@@ -30,3 +30,47 @@ Link：[官网](https://quicklook.cc/)
 ## 字体
 
 <https://font.subf.dev/zh-cn/download/>，Maple Mono（编辑器）Maple Mono NF（带图标，控制器）Maple Mono NF CN（带图标，中日字符）
+
+## WSL: Network
+
+进 WSL 设置把 Net 改成 Mirrored 模式。
+
+## WSL: git
+
+**设置 HTTP/HTTPS 代理**
+
+```sh
+git config --global http.proxy http://127.0.0.1:7897
+git config --global https.proxy http://127.0.0.1:7897
+```
+
+**取消 HTTP/HTTPS 代理**
+
+```sh
+git config --global --unset http.proxy
+git config --global --unset https.proxy
+```
+
+**设置 SSH 代理**
+
++ 打开 `~/.ssh/config`
++ 写入
+
+```
+Host github.com
+  User git
+  # 使用 connect-proxy 转发（推荐，WSL2 兼容性最好）
+  ProxyCommand nc -X 5 -x 127.0.0.1:7897 %h %p
+```
+
++ 设置
+
+```sh
+chmod 600 ~/.ssh/config
+```
+
++ 测试
+
+```sh
+ssh -T git@github.com
+```
