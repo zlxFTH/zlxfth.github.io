@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>zlxFTH&apos;s Blog</title><description>Furry Neptura</description><link>https://zlx.moe/</link><language>zh-CN</language><item><title>Windows 11 调教记录</title><link>https://zlx.moe/posts/my_windows/</link><guid isPermaLink="true">https://zlx.moe/posts/my_windows/</guid><description>Mac 转 Win+WSL 了。</description><pubDate>Sat, 25 Jul 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;一些小的设置就不记录了，基本上就是用不顺手马上就在设置里调一下，用一段时间自然就好了。&lt;/p&gt;
+&lt;h2&gt;QuickLook&lt;/h2&gt;
+&lt;p&gt;Link：&lt;a href=&quot;https://quicklook.cc/&quot;&gt;官网&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;把 macOS Finder 的空格预览搬过来的开源软件。&lt;/p&gt;
+&lt;p&gt;装了 Office / PDF / PS / CAD 预览插件。&lt;/p&gt;
+&lt;p&gt;问题：感觉有点慢。&lt;/p&gt;
+&lt;h2&gt;加速窗口动画&lt;/h2&gt;
+&lt;p&gt;注册表：&lt;code&gt;HKEY_CURRENT_USER\Control Panel\Desktop&lt;/code&gt;。找到 &lt;code&gt;MenuShowDelay&lt;/code&gt;，值从 $400$ 改成 $100$。重启电脑。&lt;/p&gt;
+&lt;p&gt;在保留动画的同时显著减少卡顿，这个对于外接 60Hz 显示器优化及其明显。&lt;/p&gt;
+&lt;h2&gt;字体&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://font.subf.dev/zh-cn/download/&quot;&gt;https://font.subf.dev/zh-cn/download/&lt;/a&gt;，Maple Mono（编辑器）Maple Mono NF（带图标，控制器）Maple Mono NF CN（带图标，中日字符）&lt;/p&gt;
+</content:encoded></item></channel></rss>
