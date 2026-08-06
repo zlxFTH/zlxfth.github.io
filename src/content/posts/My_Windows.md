@@ -74,3 +74,32 @@ chmod 600 ~/.ssh/config
 ```sh
 ssh -T git@github.com
 ```
+
+## WSL: 编译工具
+
+```sh
+sudo apt-get install -y build-essential
+make --version
+```
+
+## WSL: 打开文件管理器
+
+```sh
+sudo cp /mnt/c/Windows/explorer.exe /usr/local/bin/open
+```
+
+打开 explorer
+
+```sh
+open
+```
+
+打开 explorer 当前目录
+
+```sh
+open .
+```
+
+类似 Mac 的 open 那样，这样就可以指哪里打哪里了。
+
+好像有个东西叫 wslu，有空来研究这个工具。
