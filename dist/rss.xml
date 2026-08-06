@@ -40,4 +40,19 @@ git config --global --unset https.proxy
 &lt;/ul&gt;
 &lt;pre&gt;&lt;code&gt;ssh -T git@github.com
 &lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;WSL: 编译工具&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;sudo apt-get install -y build-essential
+make --version
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;WSL: 打开文件管理器&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;sudo cp /mnt/c/Windows/explorer.exe /usr/local/bin/open
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;打开 explorer&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;open
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;打开 explorer 当前目录&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;open .
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;类似 Mac 的 open 那样，这样就可以指哪里打哪里了。&lt;/p&gt;
+&lt;p&gt;好像有个东西叫 wslu，有空来研究这个工具。&lt;/p&gt;
 </content:encoded></item></channel></rss>
