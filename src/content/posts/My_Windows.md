@@ -82,7 +82,7 @@ sudo apt-get install -y build-essential
 make --version
 ```
 
-## WSL: 打开文件管理器
+## WSL: 打开文件和文件夹
 
 ```sh
 sudo cp /mnt/c/Windows/explorer.exe /usr/local/bin/open
@@ -100,6 +100,13 @@ open
 open .
 ```
 
-类似 Mac 的 open 那样，这样就可以指哪里打哪里了。
+用默认应用打开当前目录的文件
 
-好像有个东西叫 wslu，有空来研究这个工具。
+```sh
+open a.txt
+```
+
+现在功能类似 Mac 的 open，这样就可以指哪里打哪里了。
+
+唯一的问题是 open 打开文件后面不能使用相对路径，但是可以打开子目录文件夹，应该会有更好的解决方案。好像有个东西叫 wslu，有空来研究这个。
+

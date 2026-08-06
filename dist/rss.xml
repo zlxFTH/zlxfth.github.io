@@ -44,7 +44,7 @@ git config --global --unset https.proxy
 &lt;pre&gt;&lt;code&gt;sudo apt-get install -y build-essential
 make --version
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;WSL: 打开文件管理器&lt;/h2&gt;
+&lt;h2&gt;WSL: 打开文件和文件夹&lt;/h2&gt;
 &lt;pre&gt;&lt;code&gt;sudo cp /mnt/c/Windows/explorer.exe /usr/local/bin/open
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;打开 explorer&lt;/p&gt;
@@ -53,6 +53,9 @@ make --version
 &lt;p&gt;打开 explorer 当前目录&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;open .
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;类似 Mac 的 open 那样，这样就可以指哪里打哪里了。&lt;/p&gt;
-&lt;p&gt;好像有个东西叫 wslu，有空来研究这个工具。&lt;/p&gt;
+&lt;p&gt;用默认应用打开当前目录的文件&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;open a.txt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;现在功能类似 Mac 的 open，这样就可以指哪里打哪里了。&lt;/p&gt;
+&lt;p&gt;唯一的问题是 open 打开文件后面不能使用相对路径，但是可以打开子目录文件夹，应该会有更好的解决方案。好像有个东西叫 wslu，有空来研究这个。&lt;/p&gt;
 </content:encoded></item></channel></rss>
