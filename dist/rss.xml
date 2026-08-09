@@ -11,6 +11,27 @@
 &lt;p&gt;&lt;a href=&quot;https://font.subf.dev/zh-cn/download/&quot;&gt;https://font.subf.dev/zh-cn/download/&lt;/a&gt;，Maple Mono（编辑器）Maple Mono NF（带图标，控制器）Maple Mono NF CN（带图标，中日字符）&lt;/p&gt;
 &lt;h2&gt;WSL: Network&lt;/h2&gt;
 &lt;p&gt;进 WSL 设置把 Net 改成 Mirrored 模式。&lt;/p&gt;
+&lt;p&gt;bashrc/zshrc：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# 配置 wsl 走 win clash verge 代理
+proxy() {
+  export http_proxy=&quot;http://127.0.0.1:7897&quot;
+  export https_proxy=&quot;http://127.0.0.1:7897&quot;
+  export all_proxy=&quot;socks5://127.0.0.1:7897&quot;
+
+  export HTTP_PROXY=&quot;$http_proxy&quot;
+  export HTTPS_PROXY=&quot;$https_proxy&quot;
+  export ALL_PROXY=&quot;$all_proxy&quot;
+
+  echo &quot;终端代理已开启&quot;
+}
+unproxy() {
+  unset http_proxy https_proxy all_proxy
+  unset HTTP_PROXY HTTPS_PROXY ALL_PROXY
+
+  echo &quot;终端代理已关闭&quot;
+}
+proxy
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h2&gt;WSL: git&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;设置 HTTP/HTTPS 代理&lt;/strong&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;git config --global http.proxy http://127.0.0.1:7897
@@ -58,4 +79,96 @@ make --version
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;现在功能类似 Mac 的 open，这样就可以指哪里打哪里了。&lt;/p&gt;
 &lt;p&gt;唯一的问题是 open 打开文件后面不能使用相对路径，但是可以打开子目录文件夹，应该会有更好的解决方案。好像有个东西叫 wslu，有空来研究这个。&lt;/p&gt;
+&lt;h2&gt;WSL: 终端&lt;/h2&gt;
+&lt;p&gt;懒人套装&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Zsh&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;sudo apt install -y zsh
+chsh -s $(which zsh)
+echo $SHELL
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;Oh My Zsh&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;sh -c &quot;$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;autosuggestions&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/zsh-users/zsh-autosuggestions \
+${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;syntax-highlighting&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
+${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;修改 zshrc&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;plugins=(
+  git
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;Starship&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;curl -sS https://starship.rs/install.sh | sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;修改 zshrc&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;eval &quot;$(starship init zsh)&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;主题&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;starship preset catppuccin-powerline -o ~/.config/starship.toml
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;zoxide&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;修改 zshrc&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;eval &quot;$(zoxide init zsh)&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows Terminal 主题&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;{
+  &quot;name&quot;: &quot;Catppuccin Mocha&quot;,
+  &quot;black&quot;: &quot;#45475a&quot;,
+  &quot;red&quot;: &quot;#f38ba8&quot;,
+  &quot;green&quot;: &quot;#a6e3a1&quot;,
+  &quot;yellow&quot;: &quot;#f9e2af&quot;,
+  &quot;blue&quot;: &quot;#89b4fa&quot;,
+  &quot;purple&quot;: &quot;#f5c2e7&quot;,
+  &quot;cyan&quot;: &quot;#94e2d5&quot;,
+  &quot;white&quot;: &quot;#bac2de&quot;,
+  &quot;brightBlack&quot;: &quot;#585b70&quot;,
+  &quot;brightRed&quot;: &quot;#f38ba8&quot;,
+  &quot;brightGreen&quot;: &quot;#a6e3a1&quot;,
+  &quot;brightYellow&quot;: &quot;#f9e2af&quot;,
+  &quot;brightBlue&quot;: &quot;#89b4fa&quot;,
+  &quot;brightPurple&quot;: &quot;#f5c2e7&quot;,
+  &quot;brightCyan&quot;: &quot;#94e2d5&quot;,
+  &quot;brightWhite&quot;: &quot;#a6adc8&quot;,
+  &quot;background&quot;: &quot;#1e1e2e&quot;,
+  &quot;foreground&quot;: &quot;#cdd6f4&quot;,
+  &quot;selectionBackground&quot;: &quot;#585b70&quot;,
+  &quot;cursorColor&quot;: &quot;#f5e0dc&quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;常用快捷键&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ctrl + u&lt;/code&gt;：清空当前输入命令。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ctrl + a&lt;/code&gt;：跳转开头。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ctrl + e&lt;/code&gt;：跳转结尾。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ctrl + ←/→&lt;/code&gt;：跳转单词。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ctrl + w&lt;/code&gt;：删除这个单词光标前的部分。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ctrl + k&lt;/code&gt;：删除光标后的所有。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ctrl + l&lt;/code&gt;：清屏。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;把 Windows Terminal 的声音关了，烦求的很。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 </content:encoded></item></channel></rss>
