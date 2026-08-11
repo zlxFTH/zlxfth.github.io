@@ -9,37 +9,16 @@
 &lt;h2&gt;字体&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&quot;https://font.subf.dev/zh-cn/download/&quot;&gt;https://font.subf.dev/zh-cn/download/&lt;/a&gt;，Maple Mono（编辑器）Maple Mono NF（带图标，控制器）Maple Mono NF CN（带图标，中日字符）&lt;/p&gt;
 &lt;h2&gt;WSL: Network&lt;/h2&gt;
+&lt;p&gt;老方法是在 &lt;code&gt;bashrc/zshrc&lt;/code&gt; 设置 http/https 的 proxy，但是没有办法在 Codex Windows App 里面使用代理。&lt;/p&gt;
 &lt;p&gt;进 WSL 设置把 Net 改成 Mirrored 模式。&lt;/p&gt;
-&lt;p&gt;bashrc/zshrc：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# 配置 wsl 走 win clash verge 代理
-proxy() {
-  export http_proxy=&quot;http://127.0.0.1:7897&quot;
-  export https_proxy=&quot;http://127.0.0.1:7897&quot;
-  export all_proxy=&quot;socks5://127.0.0.1:7897&quot;
-
-  export HTTP_PROXY=&quot;$http_proxy&quot;
-  export HTTPS_PROXY=&quot;$https_proxy&quot;
-  export ALL_PROXY=&quot;$all_proxy&quot;
-
-  echo &quot;终端代理已开启&quot;
-}
-unproxy() {
-  unset http_proxy https_proxy all_proxy
-  unset HTTP_PROXY HTTPS_PROXY ALL_PROXY
-
-  echo &quot;终端代理已关闭&quot;
-}
-proxy
+&lt;p&gt;打开 &lt;code&gt;C:\Users\你的用户名\.wslconfig&lt;/code&gt;，修改&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[wsl2]
+networkingMode=Mirrored
+dnsTunneling=true
+autoProxy=true
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2&gt;WSL: Git&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;设置 HTTP/HTTPS 代理&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git config --global http.proxy http://127.0.0.1:7897
-git config --global https.proxy http://127.0.0.1:7897
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;取消 HTTP/HTTPS 代理&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git config --global --unset http.proxy
-git config --global --unset https.proxy
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;HTTP/HTTPS 已经在 WSL: Network 里面设置。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;设置 SSH 代理&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;打开 &lt;code&gt;~/.ssh/config&lt;/code&gt;&lt;/li&gt;
@@ -283,6 +262,14 @@ pnpm config get registry
 &lt;p&gt;恢复：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;pnpm config set registry https://registry.npmjs.org
 &lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;ChatGPT/Codex&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;桌面版&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;微软应用商店安装 ChatGPT。智能体切换成 WSL 没法用，问题没有解决，现在只能当网页版来用。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;TUI 版本（WSL: Codex）&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2&gt;TradingView&lt;/h2&gt;
 &lt;h2&gt;同花顺&lt;/h2&gt;
 &lt;p&gt;A 股人工下单交易。&lt;/p&gt;

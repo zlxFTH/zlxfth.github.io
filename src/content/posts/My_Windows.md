@@ -31,47 +31,22 @@ Link：[官网](https://quicklook.cc/)
 
 ## WSL: Network
 
+老方法是在 `bashrc/zshrc` 设置 http/https 的 proxy，但是没有办法在 Codex Windows App 里面使用代理。
+
 进 WSL 设置把 Net 改成 Mirrored 模式。
 
-bashrc/zshrc：
+打开 `C:\Users\你的用户名\.wslconfig`，修改
 
-```zsh
-# 配置 wsl 走 win clash verge 代理
-proxy() {
-  export http_proxy="http://127.0.0.1:7897"
-  export https_proxy="http://127.0.0.1:7897"
-  export all_proxy="socks5://127.0.0.1:7897"
-
-  export HTTP_PROXY="$http_proxy"
-  export HTTPS_PROXY="$https_proxy"
-  export ALL_PROXY="$all_proxy"
-
-  echo "终端代理已开启"
-}
-unproxy() {
-  unset http_proxy https_proxy all_proxy
-  unset HTTP_PROXY HTTPS_PROXY ALL_PROXY
-
-  echo "终端代理已关闭"
-}
-proxy
+```
+[wsl2]
+networkingMode=Mirrored
+dnsTunneling=true
+autoProxy=true
 ```
 
 ## WSL: Git
 
-**设置 HTTP/HTTPS 代理**
-
-```sh
-git config --global http.proxy http://127.0.0.1:7897
-git config --global https.proxy http://127.0.0.1:7897
-```
-
-**取消 HTTP/HTTPS 代理**
-
-```sh
-git config --global --unset http.proxy
-git config --global --unset https.proxy
-```
+HTTP/HTTPS 已经在 WSL: Network 里面设置。
 
 **设置 SSH 代理**
 
@@ -383,6 +358,16 @@ pnpm config get registry
 ```sh
 pnpm config set registry https://registry.npmjs.org
 ```
+
+## ChatGPT/Codex
+
++ 桌面版
+
+微软应用商店安装 ChatGPT。智能体切换成 WSL 没法用，问题没有解决，现在只能当网页版来用。
+
++ TUI 版本（WSL: Codex）
+
+
 
 ## TradingView
 
