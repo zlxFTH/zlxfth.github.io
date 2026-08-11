@@ -9,8 +9,6 @@ draft: false
 lang: ''
 ---
 
-一些小的设置就不记录了，基本上就是用不顺手马上就在设置里调一下，用一段时间自然就好了。
-
 ## QuickLook
 
 Link：[官网](https://quicklook.cc/)
@@ -59,7 +57,7 @@ unproxy() {
 proxy
 ```
 
-## WSL: git
+## WSL: Git
 
 **设置 HTTP/HTTPS 代理**
 
@@ -244,3 +242,182 @@ eval "$(zoxide init zsh)"
   + `ctrl + l`：清屏。
 
 + 把 Windows Terminal 的声音关了，烦求的很。
+
+## WSL: Yazi
+
+TUI 文件管理器
+
+```sh
+curl -LO https://github.com/sxyazi/yazi/releases/latest/download/yazi-x86_64-unknown-linux-musl.zip
+unzip yazi-x86_64-unknown-linux-musl.zip
+sudo mv yazi-x86_64-unknown-linux-musl/yazi /usr/local/bin/
+sudo mv yazi-x86_64-unknown-linux-musl/ya /usr/local/bin/
+```
+
+编辑 zshrc，退出 TUI 自动走到当前目录
+
+```bash
+function yz() {
+  local tmp="$(mktemp -t yazi-cwd.XXXXXX)"
+  yazi "$@" --cwd-file="$tmp"
+
+  if [ -f "$tmp" ]; then
+    local cwd="$(cat "$tmp")"
+    if [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+      cd "$cwd"
+    fi
+  fi
+
+  rm -f "$tmp"
+}
+```
+
++ `hjkl` 控制方向。
+
++ `q` 退出。
++ `d` 删除文件到回收站 `~/.local/share/Trash `
++ `r` 重命名。
+
+## WSL: Vim
+
+
+
+## WSL: 解压缩
+
+```sh
+sudo apt install zip unzip
+```
+
+使用：
+
+```sh
+zip archive.zip file.txt
+zip archive.zip a.txt b.txt c.txt
+zip -r archive.zip folder/
+unzip archive.zip
+unzip archive.zip -d target/
+unzip -l archive.zip
+```
+
+## WSL: Python
+
++ uv
+
+```sh
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+```sh
+uv python list # 查看可用 Python
+uv python install 3.12
+uv init
+uv python pin 3.12
+uv venv
+source .venv/bin/activate
+```
+
+## WSL: Rust
+
+
+
+## WSL: Node.js
+
++ nvm
+
+注意检查 curl 的链接最新版本。
+
+```sh
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+nvm -v
+```
+
++ nodejs/npm
+
+```sh
+nvm install --lts
+
+nvm use --lts
+nvm alias default 'lts/*'
+
+node -v
+npm -v
+```
+
++ pnpm
+
+```sh
+corepack enable
+
+corepack prepare pnpm@latest --activate
+
+pnpm -v
+```
+
++ npm 换源
+
+```sh
+npm config set registry https://registry.npmmirror.com
+npm config get registry
+```
+
+恢复：
+
+```sh
+npm config set registry https://registry.npmjs.org
+```
+
++ pnpm 换源
+
+```sh
+pnpm config set registry https://registry.npmmirror.com
+
+pnpm config get registry
+```
+
+恢复：
+
+```sh
+pnpm config set registry https://registry.npmjs.org
+```
+
+## TradingView
+
+## 同花顺
+
+A 股人工下单交易。
+
+## STranslate
+
+划词翻译工具，目前用的默认微软翻译+金山词霸。
+
+设置 Ctrl + Win + Alt + Shift + F 为划词翻译。
+
+其他快捷键全部关了。
+
+## AutoHotkey
+
+注意是 V2 版本的。快捷键管理。
+
+每个映射都是用 `.ahk` 保存的。
+
+开机启动需要把脚本快捷方式拖到 `C:\Users\Nalumi\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup` 里面。
+
++ 映射 CapsLock + F -> Ctrl + Win + Alt + Shift + F，用于划词翻译。
+
+```
+#Requires AutoHotkey v2.0
+
+; 禁用 CapsLock 原本的单按逻辑，避免误触大写切换
+SetCapsLockState "AlwaysOff"
+
+; 将 CapsLock + F 映射为 Ctrl + Win + Shift + Alt + F
+CapsLock & f::Send "^!+#f"
+
+; 如果你仍想通过 Shift + CapsLock 来切换大小写，可以取消下面这行的注释：
+; +CapsLock::SetCapsLockState GetKeyState("CapsLock", "T") ? "AlwaysOff" : "AlwaysOn"
+```
+

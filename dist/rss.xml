@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>zlxFTH&apos;s Blog</title><description>Furry Neptura</description><link>https://zlx.moe/</link><language>zh-CN</language><item><title>Windows+WSL 调教备忘录</title><link>https://zlx.moe/posts/my_windows/</link><guid isPermaLink="true">https://zlx.moe/posts/my_windows/</guid><description>Mac 转 Win+WSL 了。</description><pubDate>Sat, 25 Jul 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;一些小的设置就不记录了，基本上就是用不顺手马上就在设置里调一下，用一段时间自然就好了。&lt;/p&gt;
-&lt;h2&gt;QuickLook&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>zlxFTH&apos;s Blog</title><description>Furry Neptura</description><link>https://zlx.moe/</link><language>zh-CN</language><item><title>Windows+WSL 调教备忘录</title><link>https://zlx.moe/posts/my_windows/</link><guid isPermaLink="true">https://zlx.moe/posts/my_windows/</guid><description>Mac 转 Win+WSL 了。</description><pubDate>Sat, 25 Jul 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;QuickLook&lt;/h2&gt;
 &lt;p&gt;Link：&lt;a href=&quot;https://quicklook.cc/&quot;&gt;官网&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;把 macOS Finder 的空格预览搬过来的开源软件。&lt;/p&gt;
 &lt;p&gt;装了 Office / PDF / PS / CAD 预览插件。&lt;/p&gt;
@@ -32,7 +31,7 @@ unproxy() {
 }
 proxy
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;WSL: git&lt;/h2&gt;
+&lt;h2&gt;WSL: Git&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;设置 HTTP/HTTPS 代理&lt;/strong&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;git config --global http.proxy http://127.0.0.1:7897
 git config --global https.proxy http://127.0.0.1:7897
@@ -171,4 +170,142 @@ ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 &lt;p&gt;把 Windows Terminal 的声音关了，烦求的很。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
+&lt;h2&gt;WSL: Yazi&lt;/h2&gt;
+&lt;p&gt;TUI 文件管理器&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;curl -LO https://github.com/sxyazi/yazi/releases/latest/download/yazi-x86_64-unknown-linux-musl.zip
+unzip yazi-x86_64-unknown-linux-musl.zip
+sudo mv yazi-x86_64-unknown-linux-musl/yazi /usr/local/bin/
+sudo mv yazi-x86_64-unknown-linux-musl/ya /usr/local/bin/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;编辑 zshrc，退出 TUI 自动走到当前目录&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;function yz() {
+  local tmp=&quot;$(mktemp -t yazi-cwd.XXXXXX)&quot;
+  yazi &quot;$@&quot; --cwd-file=&quot;$tmp&quot;
+
+  if [ -f &quot;$tmp&quot; ]; then
+    local cwd=&quot;$(cat &quot;$tmp&quot;)&quot;
+    if [ -n &quot;$cwd&quot; ] &amp;amp;&amp;amp; [ &quot;$cwd&quot; != &quot;$PWD&quot; ]; then
+      cd &quot;$cwd&quot;
+    fi
+  fi
+
+  rm -f &quot;$tmp&quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;hjkl&lt;/code&gt; 控制方向。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;q&lt;/code&gt; 退出。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;d&lt;/code&gt; 删除文件到回收站 &lt;code&gt;~/.local/share/Trash &lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;r&lt;/code&gt; 重命名。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;WSL: Vim&lt;/h2&gt;
+&lt;h2&gt;WSL: 解压缩&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;sudo apt install zip unzip
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;使用：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;zip archive.zip file.txt
+zip archive.zip a.txt b.txt c.txt
+zip -r archive.zip folder/
+unzip archive.zip
+unzip archive.zip -d target/
+unzip -l archive.zip
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;WSL: Python&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;uv&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;curl -LsSf https://astral.sh/uv/install.sh | sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;uv python list # 查看可用 Python
+uv python install 3.12
+uv init
+uv python pin 3.12
+uv venv
+source .venv/bin/activate
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;WSL: Rust&lt;/h2&gt;
+&lt;h2&gt;WSL: Node.js&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;nvm&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;注意检查 curl 的链接最新版本。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+
+export NVM_DIR=&quot;$HOME/.nvm&quot;
+[ -s &quot;$NVM_DIR/nvm.sh&quot; ] &amp;amp;&amp;amp; \. &quot;$NVM_DIR/nvm.sh&quot;
+
+nvm -v
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;nodejs/npm&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;nvm install --lts
+
+nvm use --lts
+nvm alias default &apos;lts/*&apos;
+
+node -v
+npm -v
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;pnpm&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;corepack enable
+
+corepack prepare pnpm@latest --activate
+
+pnpm -v
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;npm 换源&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;npm config set registry https://registry.npmmirror.com
+npm config get registry
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;恢复：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;npm config set registry https://registry.npmjs.org
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;pnpm 换源&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;pnpm config set registry https://registry.npmmirror.com
+
+pnpm config get registry
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;恢复：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pnpm config set registry https://registry.npmjs.org
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;TradingView&lt;/h2&gt;
+&lt;h2&gt;同花顺&lt;/h2&gt;
+&lt;p&gt;A 股人工下单交易。&lt;/p&gt;
+&lt;h2&gt;STranslate&lt;/h2&gt;
+&lt;p&gt;划词翻译工具，目前用的默认微软翻译+金山词霸。&lt;/p&gt;
+&lt;p&gt;设置 Ctrl + Win + Alt + Shift + F 为划词翻译。&lt;/p&gt;
+&lt;p&gt;其他快捷键全部关了。&lt;/p&gt;
+&lt;h2&gt;AutoHotkey&lt;/h2&gt;
+&lt;p&gt;注意是 V2 版本的。快捷键管理。&lt;/p&gt;
+&lt;p&gt;每个映射都是用 &lt;code&gt;.ahk&lt;/code&gt; 保存的。&lt;/p&gt;
+&lt;p&gt;开机启动需要把脚本快捷方式拖到 &lt;code&gt;C:\Users\Nalumi\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup&lt;/code&gt; 里面。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;映射 CapsLock + F -&amp;gt; Ctrl + Win + Alt + Shift + F，用于划词翻译。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;#Requires AutoHotkey v2.0
+
+; 禁用 CapsLock 原本的单按逻辑，避免误触大写切换
+SetCapsLockState &quot;AlwaysOff&quot;
+
+; 将 CapsLock + F 映射为 Ctrl + Win + Shift + Alt + F
+CapsLock &amp;amp; f::Send &quot;^!+#f&quot;
+
+; 如果你仍想通过 Shift + CapsLock 来切换大小写，可以取消下面这行的注释：
+; +CapsLock::SetCapsLockState GetKeyState(&quot;CapsLock&quot;, &quot;T&quot;) ? &quot;AlwaysOff&quot; : &quot;AlwaysOn&quot;
+&lt;/code&gt;&lt;/pre&gt;
 </content:encoded></item></channel></rss>
