@@ -3,6 +3,12 @@
 &lt;p&gt;把 macOS Finder 的空格预览搬过来的开源软件。&lt;/p&gt;
 &lt;p&gt;装了 Office / PDF / PS / CAD 预览插件。&lt;/p&gt;
 &lt;p&gt;问题：感觉有点慢。&lt;/p&gt;
+&lt;h2&gt;关闭快速启动&lt;/h2&gt;
+&lt;p&gt;控制面板电源选项那里。&lt;/p&gt;
+&lt;h2&gt;减少内存占用&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;进 services.msc 把 SysMain 杀掉。&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2&gt;加速窗口动画&lt;/h2&gt;
 &lt;p&gt;注册表：&lt;code&gt;HKEY_CURRENT_USER\Control Panel\Desktop&lt;/code&gt;。找到 &lt;code&gt;MenuShowDelay&lt;/code&gt;，值从 $400$ 改成 $100$。重启电脑。&lt;/p&gt;
 &lt;p&gt;在保留动画的同时显著减少卡顿，这个对于外接 60Hz 显示器优化及其明显。&lt;/p&gt;
@@ -295,4 +301,213 @@ CapsLock &amp;amp; f::Send &quot;^!+#f&quot;
 ; 如果你仍想通过 Shift + CapsLock 来切换大小写，可以取消下面这行的注释：
 ; +CapsLock::SetCapsLockState GetKeyState(&quot;CapsLock&quot;, &quot;T&quot;) ? &quot;AlwaysOff&quot; : &quot;AlwaysOn&quot;
 &lt;/code&gt;&lt;/pre&gt;
+</content:encoded></item><item><title>Banzi</title><link>https://zlx.moe/posts/banzi/</link><guid isPermaLink="true">https://zlx.moe/posts/banzi/</guid><description>没整理好。</description><pubDate>Tue, 06 Feb 2018 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;Misc&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;缺省源&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+using namespace std;
+
+#define ALL(s) s.begin(), s.end()
+#define SZ(s) int(s.size())
+#define pb push_back
+
+using LL = long long;
+using ULL = unsigned long long;
+
+void Cas() {
+    
+}
+
+int main() {
+    cin.tie(0)-&amp;gt;sync_with_stdio(0);
+    int t = 1;
+    cin &amp;gt;&amp;gt; t;
+    while (t--) {
+        Cas();
+    }
+    return 0;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;Test&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;#!/bin/bash
+shopt -s nullglob # 没有匹配到任何文件时，让它返回空
+ulimit -s 1024000
+g++ $1.cpp -o $1 -std=c++20 -O2 -fsanitize=address,undefined || exit
+for f in &quot;$2&quot;/*.in; do
+    x=${f%.in}
+    \time -f &quot;$x: %es %MKB&quot; ./$1 &amp;lt; $x.in &amp;gt; $1.out
+    diff -Zq $1.out $x.ans
+done
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;随机数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;ULL seed = chrono::steady_clock::now().time_since_epoch().count();
+mt19937_64 rnd(seed);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;保留小数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;cout &amp;lt;&amp;lt; fixed &amp;lt;&amp;lt; setprecision(2);
+cout.unsetf(ios::fixed);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;Matrix&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;template &amp;lt;class T&amp;gt; struct Mat {
+    int n, m;
+    vector&amp;lt;T&amp;gt; a;
+    Mat(int n = 0, int m = 0, T v = {}) : n(n), m(m), a(n * m, v) {}
+    T&amp;amp; operator()(int i, int j) { return a[i * m + j]; }
+};
+
+using M = Mat&amp;lt;LL&amp;gt;;
+M mul(M a, M b) {
+    M c(a.n, b.m);
+    for (int i = 0; i &amp;lt; a.n; i++) {
+        for (int j = 0; j &amp;lt; b.m; j++) {
+            for (int k = 0; k &amp;lt; a.m; k++) {
+                c(i, j) = max(c(i, j), a(i, k) + b(k, j));
+            }
+        }
+    }
+    return c;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Graph&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Dijkstra&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;struct Node {
+    int u;
+    LL d;
+    bool operator&amp;lt;(const Node&amp;amp; o) const {
+        return d &amp;gt; o.d;
+    }
+};
+priority_queue&amp;lt;Node&amp;gt; q;
+vector&amp;lt;LL&amp;gt; D(n, INF);
+D[0] = 0;
+q.push({0, 0});
+while (SZ(q)) {
+    auto [u, d] = q.top();
+    q.pop();
+    if (d != D[u]) continue;
+    for (auto [v, w] : G[u]) {
+        if (D[v] &amp;gt; d + w) {
+            D[v] = d + w;
+            q.push({v, D[v]});
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Data Structure&lt;/h2&gt;
+&lt;h2&gt;String&lt;/h2&gt;
+&lt;h2&gt;Math&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Barrett&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;适用于 int 范围内的模数，已经特判了 $P = 1$ 的情况，不用做其它任何处理。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;struct Mod {
+    ULL m, p;
+    void init(ULL _p) { p = _p; m = (I(1) &amp;lt;&amp;lt; 64) / p; }
+    ULL operator()(ULL x) {
+        return p == 1 ? 0 : x - (I(x) * m &amp;gt;&amp;gt; 64) * p;
+    }
+} mod;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;多固定模数&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;使用 &lt;code&gt;template&amp;lt;int P&amp;gt;&lt;/code&gt; 即可，模数会在编译期优化。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;不定模数&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;内置 Barrett。&lt;/p&gt;
+&lt;p&gt;注意访问 static 要用 &lt;code&gt;::&lt;/code&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;template &amp;lt;class T&amp;gt; T qp(T a, LL b) {
+    T c = 1;
+    for (; b; b &amp;gt;&amp;gt;= 1, a *= a) if (b &amp;amp; 1) c *= a;
+    return c;
+}
+template &amp;lt;class M&amp;gt;
+struct Z {
+    static LL mod(ULL x) {
+        LL tmp = M::p == 1 ? 0 : x - (I(x) * M::m &amp;gt;&amp;gt; 64) * M::p;
+        if (tmp &amp;gt;= M::p) tmp -= M::p;
+        return tmp;
+    }
+    LL v;
+    Z(LL x = 0) : v(x &amp;gt;= 0 ? mod(x) : M::p - mod(-x)) {}
+    Z operator-() const { return -v; }
+    Z &amp;amp;operator+=(Z b) { return v = mod(v + b.v), *this; }
+    Z &amp;amp;operator-=(Z b) { return v = mod(v + M::p - b.v), *this; }
+    Z &amp;amp;operator*=(Z b) { return v = mod(v * b.v), *this; }
+    Z &amp;amp;operator/=(Z b) { return *this *= qp(b, M::p - 2); }
+    friend Z operator+(Z a, Z b) { return a += b; }
+    friend Z operator-(Z a, Z b) { return a -= b; }
+    friend Z operator*(Z a, Z b) { return a *= b; }
+    friend Z operator/(Z a, Z b) { return a /= b; }
+    friend ostream &amp;amp;operator&amp;lt;&amp;lt;(ostream &amp;amp;os, Z a) { return os &amp;lt;&amp;lt; a.v; }
+};
+struct Z1 {
+    inline static ULL p = 0, m = 0;
+    static void init(ULL _p) {
+        p = _p;
+        m = (I(1) &amp;lt;&amp;lt; 64) / p;
+    }
+};
+using Mint = Z&amp;lt;Z1&amp;gt;;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;bit&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;template &amp;lt;class T&amp;gt;
+struct BIT {
+    int n;
+    vector&amp;lt;T&amp;gt; a;
+    BIT(int n = 0) : n(n), a(n + 1) {}
+    void mdf(int p, T v) {
+        for (int i = p + 1; i &amp;lt;= n; i += i &amp;amp; -i) a[i] += v;
+    }
+    T qry(int p) {
+        T r{};
+        for (int i = p; i &amp;gt; 0; i -= i &amp;amp; -i) r += a[i];
+        return r;
+    }
+    T sum(int l, int r) { return qry(r) - qry(l); }
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;geo&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;using ld = double;
+using point = complex&amp;lt;ld&amp;gt;;
+
+const ld eps = 1e-8;
+
+ld dot(point a, point b) {return (conj(a) * b).real();}
+ld cross(point a, point b) {return (conj(a) * b).imag();}
+ld dist(point a, point b) {return abs(a - b);}
+
+bool on_line(point p, point a, point b) {
+    return abs(cross(p - a, p - b)) &amp;lt;= eps;
+}
+bool on_seg(point p, point a, point b) {
+    return on_line(p, a, b) &amp;amp;&amp;amp; dot(p - a, p - b) &amp;lt;= eps;
+}
+pair&amp;lt;int, point&amp;gt; inter(point a, point b, point c, point d) {
+    point u = b - a, v = d - c, w = a - c;
+    if (abs(cross(u, v)) &amp;lt;= eps) return {0, {}};
+    return {1, a + u * (cross(v, w) / cross(u, v))};
+}
+pair&amp;lt;int, point&amp;gt; inter_seg(point a, point b, point c, point d) {
+    auto [op, o] = inter(a, b, c, d);
+    return {op &amp;amp;&amp;amp; on_seg(o, a, b) &amp;amp;&amp;amp; on_seg(o, c, d), o};
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;run&lt;/h2&gt;
+&lt;h2&gt;pai&lt;/h2&gt;
 </content:encoded></item></channel></rss>

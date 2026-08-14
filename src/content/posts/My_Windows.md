@@ -19,6 +19,14 @@ Link：[官网](https://quicklook.cc/)
 
 问题：感觉有点慢。
 
+## 关闭快速启动
+
+控制面板电源选项那里。
+
+## 减少内存占用
+
++ 进 services.msc 把 SysMain 杀掉。
+
 ## 加速窗口动画
 
 注册表：`HKEY_CURRENT_USER\Control Panel\Desktop`。找到 `MenuShowDelay`，值从 $400$ 改成 $100$。重启电脑。
