@@ -167,6 +167,7 @@ curl -sS https://starship.rs/install.sh | sh
 
 ```zsh
 eval "$(starship init zsh)"
+export STARSHIP_LOG=error
 ```
 
 主题
@@ -371,11 +372,24 @@ pnpm config set registry https://registry.npmjs.org
 
 + 桌面版
 
-微软应用商店安装 ChatGPT。智能体切换成 WSL 没法用，问题没有解决，现在只能当网页版来用。
+微软应用商店安装 ChatGPT。参考 WSL: Network 章节，WSL 采用 Mirrored 模式走了 Clash 代理能正常使用 Codex TUI，但是 Codex Windows App 把工作环境切换到 WSL 之后一直  request timed out，问题是：Desktop 启动的 WSL app-server 里，大写 `HTTP_PROXY/HTTPS_PROXY` 是空值。这个空值在它当前的网络请求链里覆盖/干扰了有效的小写代理变量。简单来说就是大小写代理变量问题，大写没设置。
+
+解决方案：在 Windows 用户环境变量中设置大写代理。在 PowerShell 中，分别运行两个：
+
+```powershell
+[Environment]::SetEnvironmentVariable(
+  "HTTP_PROXY",
+  "http://127.0.0.1:7897",
+  "User"
+)
+[Environment]::SetEnvironmentVariable(
+  "HTTPS_PROXY",
+  "http://127.0.0.1:7897",
+  "User"
+)
+```
 
 + TUI 版本（WSL: Codex）
-
-
 
 ## TradingView
 
