@@ -3,6 +3,9 @@
 &lt;p&gt;把 macOS Finder 的空格预览搬过来的开源软件。&lt;/p&gt;
 &lt;p&gt;装了 Office / PDF / PS / CAD 预览插件。&lt;/p&gt;
 &lt;p&gt;问题：感觉有点慢。&lt;/p&gt;
+&lt;h2&gt;Listary&lt;/h2&gt;
+&lt;p&gt;&amp;lt;www.listary.net&amp;gt;，双击 ctrl 启动搜索应用和文件。&lt;/p&gt;
+&lt;p&gt;有空过来氪个 pro 版，挺干净的。&lt;/p&gt;
 &lt;h2&gt;关闭快速启动&lt;/h2&gt;
 &lt;p&gt;控制面板电源选项那里。&lt;/p&gt;
 &lt;h2&gt;减少内存占用&lt;/h2&gt;
@@ -263,7 +266,6 @@ npm config get registry
 &lt;li&gt;pnpm 换源&lt;/li&gt;
 &lt;/ul&gt;
 &lt;pre&gt;&lt;code&gt;pnpm config set registry https://registry.npmmirror.com
-
 pnpm config get registry
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;恢复：&lt;/p&gt;

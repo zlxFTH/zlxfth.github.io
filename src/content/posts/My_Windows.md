@@ -19,6 +19,12 @@ Link：[官网](https://quicklook.cc/)
 
 问题：感觉有点慢。
 
+## Listary
+
+<www.listary.net>，双击 ctrl 启动搜索应用和文件。
+
+有空过来氪个 pro 版，挺干净的。
+
 ## 关闭快速启动
 
 控制面板电源选项那里。
@@ -358,7 +364,6 @@ npm config set registry https://registry.npmjs.org
 
 ```sh
 pnpm config set registry https://registry.npmmirror.com
-
 pnpm config get registry
 ```
 
