@@ -1,4 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>zlxFTH&apos;s Blog</title><description>Furry Neptura</description><link>https://zlx.moe/</link><language>zh-CN</language><item><title>Windows+WSL 调教备忘录</title><link>https://zlx.moe/posts/my_windows/</link><guid isPermaLink="true">https://zlx.moe/posts/my_windows/</guid><description>Mac 转 Win+WSL 了。</description><pubDate>Sat, 25 Jul 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;QuickLook&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>zlxFTH&apos;s Blog</title><description>Furry Neptura</description><link>https://zlx.moe/</link><language>zh-CN</language><item><title>Cuda</title><link>https://zlx.moe/posts/cuda/</link><guid isPermaLink="true">https://zlx.moe/posts/cuda/</guid><pubDate>Tue, 20 Oct 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;cuda&lt;/p&gt;
+&lt;p&gt;nvcc&lt;/p&gt;
+</content:encoded></item><item><title>AI Infra</title><link>https://zlx.moe/posts/infra/</link><guid isPermaLink="true">https://zlx.moe/posts/infra/</guid><description>研究一下，Infra 咋学啊。</description><pubDate>Mon, 19 Oct 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;资料&lt;/h2&gt;
+&lt;p&gt;AI Infra Guide: &lt;a href=&quot;https://caomaolufei.github.io/AIInfraGuide/&quot;&gt;https://caomaolufei.github.io/AIInfraGuide/&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Transformer 理解&lt;/h2&gt;
+</content:encoded></item><item><title>Windows+WSL 调教备忘录</title><link>https://zlx.moe/posts/my_windows/</link><guid isPermaLink="true">https://zlx.moe/posts/my_windows/</guid><description>Mac 转 Win+WSL 了。</description><pubDate>Sat, 25 Jul 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;QuickLook&lt;/h2&gt;
 &lt;p&gt;Link：&lt;a href=&quot;https://quicklook.cc/&quot;&gt;官网&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;把 macOS Finder 的空格预览搬过来的开源软件。&lt;/p&gt;
 &lt;p&gt;装了 Office / PDF / PS / CAD 预览插件。&lt;/p&gt;
@@ -316,4 +321,17 @@ CapsLock &amp;amp; f::Send &quot;^!+#f&quot;
 ; 如果你仍想通过 Shift + CapsLock 来切换大小写，可以取消下面这行的注释：
 ; +CapsLock::SetCapsLockState GetKeyState(&quot;CapsLock&quot;, &quot;T&quot;) ? &quot;AlwaysOff&quot; : &quot;AlwaysOn&quot;
 &lt;/code&gt;&lt;/pre&gt;
+</content:encoded></item><item><title>感受一下 Transformer</title><link>https://zlx.moe/posts/transformer/</link><guid isPermaLink="true">https://zlx.moe/posts/transformer/</guid><pubDate>Thu, 01 Jan 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;前言&lt;/h2&gt;
+&lt;h2&gt;概览&lt;/h2&gt;
+&lt;h2&gt;Tokenization&lt;/h2&gt;
+&lt;p&gt;Seq2Seq，输入是一段文字序列，进 Transformer 之前要先加工成统一的格式，向量。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;中文：把一个字或者这个字的 UTF-8 序列切成一个 Token。&lt;/p&gt;
+&lt;h2&gt;Word Embedding&lt;/h2&gt;
+&lt;p&gt;变成 Token ID 序列之后还要转换成向量序列。&lt;/p&gt;
+&lt;p&gt;这一步叫 Word Embedding（词嵌入）。&lt;/p&gt;
+&lt;p&gt;记 Token ID 数量为 $V$。&lt;/p&gt;
+&lt;p&gt;显然不能建立维度数量 = Token ID 数量的空间（每个 Token 对应维取 1，其他全 0），维度爆炸，而且不能在空间中体现出语意关系。&lt;/p&gt;
+&lt;p&gt;但是可以从这个空间出发，进行映射操作，&lt;/p&gt;
 </content:encoded></item></channel></rss>
