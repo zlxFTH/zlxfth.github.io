@@ -13,5 +13,7 @@ lang: ''
 
 AI Infra Guide: <https://caomaolufei.github.io/AIInfraGuide/>
 
-## Transformer 理解
+
+
+算子 + 通信 + 编译器
 

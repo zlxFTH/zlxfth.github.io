@@ -31,3 +31,17 @@ cd cs336-a1 && uv run pytest tests/test_train_bpe.py -q
 
 train_bpe
 
+## 杂项 Takeaway
+
+基础太差了，顺路记录一些学到的杂项东西。
+
+### 01
+
+目录下面放个 `__init__.py`，这个目录就可以当成 python 里面的包用，目录下的 `.py` 就是这个包的子模块。
+
+例如这个仓库就可以直接
+
+```py
+from cs336_basics.train_bpe import train_bpe
+```
+
