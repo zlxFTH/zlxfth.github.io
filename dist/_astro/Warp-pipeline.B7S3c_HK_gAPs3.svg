@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1460" height="180" viewBox="0 0 1460 180" role="img" aria-labelledby="title description">
+  <title id="title">Warp 指令执行流水线</title>
+  <desc id="description">取指 Fetch → 译码 Decode → 发射 Issue → 执行 Execute → 写回 Write Back。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#606570"/>
+    </marker>
+  </defs>
+  <rect width="1460" height="180" fill="#ffffff"/>
+  <g fill="none" stroke="#606570" stroke-width="2.5" marker-end="url(#arrow)">
+    <path d="M 270 90 H 316"/>
+    <path d="M 560 90 H 606"/>
+    <path d="M 850 90 H 896"/>
+    <path d="M 1140 90 H 1186"/>
+  </g>
+  <g fill="#f2effc" stroke="#ab98cf" stroke-width="2">
+    <rect x="30" y="35" width="240" height="110" rx="8"/>
+    <rect x="320" y="35" width="240" height="110" rx="8"/>
+    <rect x="610" y="35" width="240" height="110" rx="8"/>
+    <rect x="900" y="35" width="240" height="110" rx="8"/>
+    <rect x="1190" y="35" width="240" height="110" rx="8"/>
+  </g>
+  <g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif" text-anchor="middle">
+    <g fill="#292435" font-size="30" font-weight="600">
+      <text x="150" y="82">取指</text>
+      <text x="440" y="82">译码</text>
+      <text x="730" y="82">发射</text>
+      <text x="1020" y="82">执行</text>
+      <text x="1310" y="82">写回</text>
+    </g>
+    <g fill="#565062" font-size="23">
+      <text x="150" y="116">Fetch</text>
+      <text x="440" y="116">Decode</text>
+      <text x="730" y="116">Issue</text>
+      <text x="1020" y="116">Execute</text>
+      <text x="1310" y="116">Write Back</text>
+    </g>
+  </g>
+</svg>
