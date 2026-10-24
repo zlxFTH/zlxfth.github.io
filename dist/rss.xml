@@ -17,7 +17,7 @@
 &lt;p&gt;例如这个仓库就可以直接&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;from cs336_basics.train_bpe import train_bpe
 &lt;/code&gt;&lt;/pre&gt;
-</content:encoded></item><item><title>Cuda</title><link>https://zlx.moe/posts/cuda/</link><guid isPermaLink="true">https://zlx.moe/posts/cuda/</guid><pubDate>Tue, 20 Oct 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;环境&lt;/h2&gt;
+</content:encoded></item><item><title>GPU + Cuda +</title><link>https://zlx.moe/posts/cuda/</link><guid isPermaLink="true">https://zlx.moe/posts/cuda/</guid><pubDate>Tue, 20 Oct 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;环境&lt;/h2&gt;
 &lt;p&gt;9600x + 32GB + 5060 8GB&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;./Cuda/Environment-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;./Cuda/Environment-2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -31,6 +31,24 @@
 &lt;pre&gt;&lt;code&gt;gridDim.x: 
 blockDim.x: 
 &lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;SM&lt;/h2&gt;
+&lt;p&gt;Streaming Multiprocessor（流式多处理器），是 GPU 内部集成调度、计算和片上存储资源的硬件模块。&lt;/p&gt;
+&lt;p&gt;SM 是 GPU 的模块化设计，设计一块 GPU 时复用 SM 的设计，提高 SM 数量，可以直接提高算力。&lt;/p&gt;
+&lt;h2&gt;Warp&lt;/h2&gt;
+&lt;p&gt;Warp（线程束），硬件意义上的划分最小单位，按照 &lt;code&gt;threadIdx&lt;/code&gt; $32$ 个连续 Thread 一组自动划分，Thread 来自同一个 Block，所以一个 Block 的最后一个 Warp 可能会有 lane 不参与执行。&lt;/p&gt;
+&lt;p&gt;为什么要设计 Warp？干一样的活，均摊发射指令的时间成本。&lt;/p&gt;
+&lt;h3&gt;Warp Scheduler&lt;/h3&gt;
+&lt;p&gt;一个 Warp Scheduler 每个 cycle 会选择一个已经就绪的 Warp 选择一个发射执行指令。现代架构一个 SM 通常有多个 WS（通常 4 个），这种设计可以避免在一个 Warp 上面等待，也可以同时启动多个已就绪 Warp。&lt;/p&gt;
+&lt;p&gt;WS 在 Warp 间切换是零开销的（zero-overhead context switch），是说切换不需要像 CPU 那样保存/恢复。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Warp A 发射内存读取指令 → 等待数据返回（~400 cycles）
+Warp Scheduler 切换到 Warp B → 执行计算指令
+切换到 Warp C → 执行计算指令
+...
+Warp A 数据就绪 → 重新调度执行
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;SIMT &amp;amp; SIMD&lt;/h2&gt;
+&lt;p&gt;Single Instruction, Multiple Threads&lt;/p&gt;
+&lt;p&gt;Single Instruction, Multiple Data&lt;/p&gt;
 </content:encoded></item><item><title>AI Infra</title><link>https://zlx.moe/posts/infra/</link><guid isPermaLink="true">https://zlx.moe/posts/infra/</guid><description>研究一下，Infra 咋学啊。</description><pubDate>Mon, 19 Oct 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;资料&lt;/h2&gt;
 &lt;p&gt;AI Infra Guide: &lt;a href=&quot;https://caomaolufei.github.io/AIInfraGuide/&quot;&gt;https://caomaolufei.github.io/AIInfraGuide/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;算子 + 通信 + 编译器&lt;/p&gt;
