@@ -100,21 +100,35 @@ Warp 内，Thread 之间交换数据
 // mask: 参与交换的 lane，unsigned 2^32 表示，全选 0xFFFFFFFFu（十六进制，二进制用 0b）
 // var: 传入的是自己的，返回的是源的
 // width: 设置分组，要求是 1、2、4、8、16、32
-// laneMask 会 mod width
-// laneId 为 lane mod width
-// 下面的越界是组内越界
+// laneId 为 lane 在 mod width 之前的原始 id
+// 下面的越界是指组内越界
+// delta 和 laneMask 只取最后 5 位
 
-// 源 lane: srcLane
+// 源 lane: 对应组起点 + srcLane mod width
 T __shfl_sync(unsigned mask, T var, int srcLane, int width=32);
 // 源 lane: laneId - delta（越界时返回自己的 var）
 T __shfl_up_sync(unsigned mask, T var, unsigned delta, int width=32);
 // 源 lane: laneId + delta（越界时返回自己的 var）
 T __shfl_down_sync(unsigned mask, T var, unsigned delta, int width=32);
 // 源 lane: laneId ^ laneMask
+// 越界规则：允许读前面的组，指向后面的组返回自己。
 T __shfl_xor_sync(unsigned mask, T var, int laneMask, int width=32);
 ```
 
 好处：避免占用共享内存；
+
+### Warp Vote
+
+```cpp
+// 所有线程的 predicate 都为 true 时返回 true
+int __all_sync(unsigned mask, int predicate);
+// 任意线程的 predicate 为 true 时返回 true
+int __any_sync(unsigned mask, int predicate);
+// 返回一个 32-bit 位图，每个 bit 对应一个 lane 的 predicate 值
+unsigned __ballot_sync(unsigned mask, int predicate);
+```
+
+
 
 ## SIMT & SIMD
 
