@@ -89,6 +89,13 @@ int __any_sync(unsigned mask, int predicate);
 // 返回一个 32-bit 位图，每个 bit 对应一个 lane 的 predicate 值
 unsigned __ballot_sync(unsigned mask, int predicate);
 &lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;_&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;// 获取当前活跃线程的掩码（Volta+ 才有意义）
+unsigned mask = __activemask();
+// Warp 内同步屏障（确保指定的线程前面的操作都干完了再继续）
+__syncwarp(0xFFFFFFFF);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;Warp Match&lt;/h3&gt;
 &lt;h2&gt;SIMT &amp;amp; SIMD&lt;/h2&gt;
 &lt;p&gt;Single Instruction, Multiple Threads&lt;/p&gt;
 &lt;p&gt;Single Instruction, Multiple Data&lt;/p&gt;

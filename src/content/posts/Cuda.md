@@ -128,6 +128,19 @@ int __any_sync(unsigned mask, int predicate);
 unsigned __ballot_sync(unsigned mask, int predicate);
 ```
 
+### _ 
+
+```cpp
+// 获取当前活跃线程的掩码（Volta+ 才有意义）
+unsigned mask = __activemask();
+// Warp 内同步屏障（确保指定的线程前面的操作都干完了再继续）
+__syncwarp(0xFFFFFFFF);
+```
+
+
+
+### Warp Match
+
 
 
 ## SIMT & SIMD
