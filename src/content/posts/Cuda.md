@@ -78,7 +78,43 @@ Warp A 数据就绪 → 重新调度执行
 
 Divergence 差异
 
-WD 指同一个 Warp 
+WD 指同一个 Warp 里面 Thread 出现条件分支（If/Else，循环长度不同等）这个时候只能串行，比如先做进 If 的 Thread，再做 Else 里面的 Thread，因为要求同步执行，没进这个分支的 Thread 暂时被 masked off。
+
+以奇偶 If/Else 为例，耗时是没有分支的 $2$ 倍。
+
+Divergence 的量化，可以用 Branch Efficiency 来衡量：
+
+$$
+\text{Branch Efficiency} = \frac{\text{Non-Divergent Branches}}{\text{Total Branches}} \times 100\%
+$$
+
+分子是，所有 Thread 一起走的分支数，分母是总分支数。
+
+所以要尽量避免 WD 发生。核心是让一个 Warp 走相同分支，可以改 If 条件，bool 表达式替代 If（ReLU），数据重排，统一循环次数等。
+
+### Warp Shuffle
+
+Warp 内，Thread 之间交换数据
+
+```cpp
+// mask: 参与交换的 lane，unsigned 2^32 表示，全选 0xFFFFFFFFu（十六进制，二进制用 0b）
+// var: 传入的是自己的，返回的是源的
+// width: 设置分组，要求是 1、2、4、8、16、32
+// laneMask 会 mod width
+// laneId 为 lane mod width
+// 下面的越界是组内越界
+
+// 源 lane: srcLane
+T __shfl_sync(unsigned mask, T var, int srcLane, int width=32);
+// 源 lane: laneId - delta（越界时返回自己的 var）
+T __shfl_up_sync(unsigned mask, T var, unsigned delta, int width=32);
+// 源 lane: laneId + delta（越界时返回自己的 var）
+T __shfl_down_sync(unsigned mask, T var, unsigned delta, int width=32);
+// 源 lane: laneId ^ laneMask
+T __shfl_xor_sync(unsigned mask, T var, int laneMask, int width=32);
+```
+
+好处：避免占用共享内存；
 
 ## SIMT & SIMD
 
@@ -109,4 +145,3 @@ SIMT，参考 Cuda Kernel 的写法，它的思路是人只需要从单个线程
 ## Reference
 
 [AI Infra Guide](https://caomaolufei.github.io/AIInfraGuide/)
-
