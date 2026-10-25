@@ -115,7 +115,7 @@ T __shfl_down_sync(unsigned mask, T var, unsigned delta, int width=32);
 T __shfl_xor_sync(unsigned mask, T var, int laneMask, int width=32);
 ```
 
-好处：避免占用共享内存；
+好处：避免占用共享内存；减少同步屏障开销；寄存器到寄存器的通信延迟低；
 
 ### Warp Vote
 
@@ -128,20 +128,23 @@ int __any_sync(unsigned mask, int predicate);
 unsigned __ballot_sync(unsigned mask, int predicate);
 ```
 
-### _ 
+### activemask & syncwarp
 
 ```cpp
-// 获取当前活跃线程的掩码（Volta+ 才有意义）
+// 获取当前活跃线程的掩码（Volta+, 调试的时候可以查看当前进程走到了，实际可能）
 unsigned mask = __activemask();
 // Warp 内同步屏障（确保指定的线程前面的操作都干完了再继续）
 __syncwarp(0xFFFFFFFF);
 ```
 
-
-
 ### Warp Match
 
-
+```cpp
+// 返回具有相同 val 值的线程掩码
+unsigned __match_any_sync(unsigned mask, T val);
+// 如果所有参与线程的 val 相同，返回全体掩码；否则返回 0，pred 传一个指针进去，最后 pred 会写入 0/1 表示结果
+unsigned __match_all_sync(unsigned mask, T val, int* pred);
+```
 
 ## SIMT & SIMD
 
