@@ -145,6 +145,10 @@ c[] = {3, 4, 5, 6, ...}
 &lt;p&gt;SIMT，参考 Cuda Kernel 的写法，它的思路是人只需要从单个线程的视角关注怎么编写即可，即 &lt;code&gt;c[i] = a[i] + b[i]&lt;/code&gt;， 硬件自动把线程划分成 Wrap。&lt;/p&gt;
 &lt;h2&gt;Reference&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&quot;https://caomaolufei.github.io/AIInfraGuide/&quot;&gt;AI Infra Guide&lt;/a&gt;&lt;/p&gt;
+</content:encoded></item><item><title>说不来话的小孩（1）</title><link>https://zlx.moe/posts/one-sentence-sol-1/</link><guid isPermaLink="true">https://zlx.moe/posts/one-sentence-sol-1/</guid><description>1 句话题解</description><pubDate>Tue, 20 Oct 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;CC 26 R Changchun&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;G：差分，然后是缩点板子。&lt;/li&gt;
+&lt;/ul&gt;
 </content:encoded></item><item><title>AI Infra</title><link>https://zlx.moe/posts/infra/</link><guid isPermaLink="true">https://zlx.moe/posts/infra/</guid><description>研究一下，Infra 咋学啊。</description><pubDate>Mon, 19 Oct 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;资料&lt;/h2&gt;
 &lt;p&gt;AI Infra Guide: &lt;a href=&quot;https://caomaolufei.github.io/AIInfraGuide/&quot;&gt;https://caomaolufei.github.io/AIInfraGuide/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;算子 + 通信 + 编译器&lt;/p&gt;
