@@ -149,9 +149,7 @@ c[] = {3, 4, 5, 6, ...}
 &lt;ul&gt;
 &lt;li&gt;G：差分，然后是缩点板子。&lt;/li&gt;
 &lt;/ul&gt;
-</content:encoded></item><item><title>AI Infra</title><link>https://zlx.moe/posts/infra/</link><guid isPermaLink="true">https://zlx.moe/posts/infra/</guid><description>研究一下，Infra 咋学啊。</description><pubDate>Mon, 19 Oct 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;资料&lt;/h2&gt;
-&lt;p&gt;AI Infra Guide: &lt;a href=&quot;https://caomaolufei.github.io/AIInfraGuide/&quot;&gt;https://caomaolufei.github.io/AIInfraGuide/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;算子 + 通信 + 编译器&lt;/p&gt;
+</content:encoded></item><item><title>AI Infra</title><link>https://zlx.moe/posts/infra/</link><guid isPermaLink="true">https://zlx.moe/posts/infra/</guid><description>研究一下，Infra 咋学啊。</description><pubDate>Mon, 19 Oct 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;算子 + 通信 + 编译器&lt;/p&gt;
 </content:encoded></item><item><title>Windows+WSL 调教备忘录</title><link>https://zlx.moe/posts/my_windows/</link><guid isPermaLink="true">https://zlx.moe/posts/my_windows/</guid><description>Mac 转 Win+WSL 了。</description><pubDate>Sat, 25 Jul 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;QuickLook&lt;/h2&gt;
 &lt;p&gt;Link：&lt;a href=&quot;https://quicklook.cc/&quot;&gt;官网&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;把 macOS Finder 的空格预览搬过来的开源软件。&lt;/p&gt;
