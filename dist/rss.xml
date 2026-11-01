@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>zlxFTH&apos;s Blog</title><description>Furry Neptura</description><link>https://zlx.moe/</link><language>zh-CN</language><item><title>DAG-KV-Runtime 项目技术报告</title><link>https://zlx.moe/posts/dag-kv-runtime/</link><guid isPermaLink="true">https://zlx.moe/posts/dag-kv-runtime/</guid><description>基于 vLLM 开源推理引擎，技术栈上采用 CUDA、TileLang 和 PyTorch，设计支持多分支 KV 状态复用、输出区间引用与分支合流的 DAG 推理运行时及分段分页 Attention 后端。</description><pubDate>Sat, 31 Oct 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;DAG-KV-Runtime&lt;/h2&gt;
 &lt;p&gt;一句话描述：基于 vLLM 开源推理引擎，技术栈上采用 CUDA、TileLang 和 PyTorch，设计支持多分支 KV 状态复用、输出区间引用与分支合流的 DAG 推理运行时及分段分页 Attention 后端。&lt;/p&gt;
 &lt;h3&gt;背景&lt;/h3&gt;
-&lt;p&gt;&quot;图式数据表示与语言模型训练_交流说明_v5.docx&quot;&lt;/p&gt;
+&lt;p&gt;【图式数据表示与语言模型训练_交流说明_v5.docx】&lt;/p&gt;
 &lt;h3&gt;图&lt;/h3&gt;
 &lt;p&gt;【这里没写好，假设规范了一个图的规则】&lt;/p&gt;
 &lt;p&gt;图是 DAG。&lt;/p&gt;
@@ -16,8 +16,11 @@
 &lt;p&gt;一个节点的前驱不允许同时出现实边和虚边，但允许出现多条实边或多条虚边，多条实边很好理解，支持多条虚边&lt;/p&gt;
 &lt;h3&gt;已有工作&lt;/h3&gt;
 &lt;h4&gt;Multiverse Engine&lt;/h4&gt;
-&lt;p&gt;Github: &lt;a href=&quot;https://github.com/Multiverse4FM/Multiverse-Engine&quot;&gt;https://github.com/Multiverse4FM/Multiverse-Engine&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Paper: Multiverse: Your Language Models Secretly Decide How to Parallelize and Merge Generation: &lt;a href=&quot;https://arxiv.org/abs/2506.09991&quot;&gt;https://arxiv.org/abs/2506.09991&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Github&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/Multiverse4FM/Multiverse-Engine&quot;&gt;https://github.com/Multiverse4FM/Multiverse-Engine&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Paper&lt;/p&gt;
+&lt;p&gt;Multiverse: Your Language Models Secretly Decide How to Parallelize and Merge Generation&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://arxiv.org/abs/2506.09991&quot;&gt;https://arxiv.org/abs/2506.09991&lt;/a&gt;&lt;/p&gt;
 &lt;h3&gt;本项目工作&lt;/h3&gt;
 &lt;h3&gt;测试&lt;/h3&gt;
 &lt;p&gt;Baseline 怎么选取？&lt;/p&gt;
@@ -25,34 +28,34 @@
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
-&lt;th&gt;类型&lt;/th&gt;
+&lt;th&gt;编号&lt;/th&gt;
 &lt;th&gt;Baseline 选取&lt;/th&gt;
 &lt;th&gt;作用&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
-&lt;td&gt;正确性&lt;/td&gt;
-&lt;td&gt;暴力在图上遍历可见集合，合并，计算图的距离，用 PyTorch FP32&lt;/td&gt;
-&lt;td&gt;检验计算过程是算对的&lt;/td&gt;
+&lt;td&gt;T0&lt;/td&gt;
+&lt;td&gt;暴力在图上遍历合并可见上下文集合，计算 token 的距离，用 PyTorch FP32 计算推理过程与结果&lt;/td&gt;
+&lt;td&gt;检验正确性&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;性能&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;性能&lt;/td&gt;
+&lt;td&gt;T1&lt;/td&gt;
 &lt;td&gt;&lt;/td&gt;
 &lt;td&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;性能&lt;/td&gt;
+&lt;td&gt;T2&lt;/td&gt;
 &lt;td&gt;&lt;/td&gt;
 &lt;td&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
+&lt;td&gt;T3&lt;/td&gt;
 &lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;T4&lt;/td&gt;
 &lt;td&gt;&lt;/td&gt;
 &lt;td&gt;&lt;/td&gt;
 &lt;/tr&gt;
@@ -132,6 +135,7 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3&gt;附录&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/vllm-project/vllm&quot;&gt;https://github.com/vllm-project/vllm&lt;/a&gt;&lt;/p&gt;
 </content:encoded></item><item><title>Transformer Infra Lab 实现记录</title><link>https://zlx.moe/posts/transformer-infra-lab/</link><guid isPermaLink="true">https://zlx.moe/posts/transformer-infra-lab/</guid><pubDate>Wed, 21 Oct 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;CS336 Assignment 1&lt;/h2&gt;
 &lt;p&gt;文件树&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;- cs336-a1
@@ -615,4 +619,9 @@ CapsLock &amp;amp; f::Send &quot;^!+#f&quot;
 &lt;p&gt;记 Token ID 数量为 $V$。&lt;/p&gt;
 &lt;p&gt;显然不能建立维度数量 = Token ID 数量的空间（每个 Token 对应维取 1，其他全 0），维度爆炸，而且不能在空间中体现出语意关系。&lt;/p&gt;
 &lt;p&gt;但是可以从这个空间出发，进行映射操作，&lt;/p&gt;
+</content:encoded></item><item><title>淘宝闪购</title><link>https://zlx.moe/posts/ssh/</link><guid isPermaLink="true">https://zlx.moe/posts/ssh/</guid><description>SSH 操作备忘录</description><pubDate>Sat, 01 Nov 2025 00:00:00 GMT</pubDate><content:encoded>&lt;pre&gt;&lt;code&gt;# 链接
+ssh -p port root@ip
+# 懒得输入密码了
+ssh-copy-id -i ~/.ssh/id_ed25519.pub -p 2222 root@1.2.3.4
+&lt;/code&gt;&lt;/pre&gt;
 </content:encoded></item></channel></rss>

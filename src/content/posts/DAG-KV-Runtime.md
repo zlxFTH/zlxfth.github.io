@@ -5,7 +5,7 @@ description: '基于 vLLM 开源推理引擎，技术栈上采用 CUDA、TileLan
 image: ''
 tags: []
 category: ''
-draft: false 
+draft: false
 lang: ''
 ---
 
@@ -15,7 +15,7 @@ lang: ''
 
 ### 背景
 
-"图式数据表示与语言模型训练\_交流说明\_v5.docx"
+【图式数据表示与语言模型训练\_交流说明\_v5.docx】
 
 ### 图
 
@@ -40,9 +40,15 @@ lang: ''
 
 #### Multiverse Engine
 
-Github: <https://github.com/Multiverse4FM/Multiverse-Engine>
+Github
 
-Paper: Multiverse: Your Language Models Secretly Decide How to Parallelize and Merge Generation: <https://arxiv.org/abs/2506.09991>
+<https://github.com/Multiverse4FM/Multiverse-Engine>
+
+Paper
+
+Multiverse: Your Language Models Secretly Decide How to Parallelize and Merge Generation
+
+<https://arxiv.org/abs/2506.09991>
 
 ### 本项目工作
 
@@ -52,13 +58,13 @@ Baseline 怎么选取？
 
 同一套 vLLM + 同样的 DAG 语义上下文可见规则，和现成的 Attention 实现
 
-|  类型  |                        Baseline 选取                        |         作用         |
-| :----: | :---------------------------------------------------------: | :------------------: |
-| 正确性 | 暴力在图上遍历可见集合，合并，计算图的距离，用 PyTorch FP32 | 检验计算过程是算对的 |
-|  性能  |                                                             |                      |
-|  性能  |                                                             |                      |
-|  性能  |                                                             |                      |
-|        |                                                             |                      |
+| 编号 |                        Baseline 选取                         |    作用    |
+| :--: | :----------------------------------------------------------: | :--------: |
+|  T0  | 暴力在图上遍历合并可见上下文集合，计算 token 的距离，用 PyTorch FP32 计算推理过程与结果 | 检验正确性 |
+|  T1  |                                                              |            |
+|  T2  |                                                              |            |
+|  T3  |                                                              |            |
+|  T4  |                                                              |            |
 
 + 比较：对于一个新节点的推理，暴力向上遍历
 
@@ -121,3 +127,5 @@ Baseline 怎么选取？
   + KV 存储能力有工程缺口：不支持 KV cache 的卸载与重载。
 
 ### 附录
+
+<https://github.com/vllm-project/vllm>
